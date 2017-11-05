@@ -1,0 +1,50 @@
+Different levels with a number of dungeons on each.
+Playgrounds.
+Training grounds
+Proving grouns
+Veteran grounds
+Champion grounds
+
+Monsters
+Orc
+Goblin
+Giant Serpent
+Dragon
+Balrog
+Skeleton
+Spiders
+Duck of Doom
+Large Angry Chicken
+Troll
+Ogre
+Kobolds
+Giant
+
+Weapons
+Axes, swords
+Bow & arrows
+Crossbow & bolts
+
+Shields
+
+Armor
+
+Magic items (permanent)
+Increase damage
+Increase absorbtion
+Increase durability (everything breaks eventually)
+Detect muck
+Avoid pits
+First strike against certain monster(s)
+
+Cost is base cost times the modifier of the magic ability (cumulative)
+
+Experience levels affect 
+hitpoints, 
+lockpicking,
+muck-sensing,
+extra damage inflicted, 
+#attacks, 
+#shots, 
+#bolts, 
+#fireballs

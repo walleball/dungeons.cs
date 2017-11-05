@@ -1,0 +1,105 @@
+   1 Dungeon Set-up
+ 240 Characters
+1000 Player loop
+1015 Encounters
+1270 Close-by monsters
+1460 Hear routine
+1500 Damage routine
+1600 Room information
+1656 Options
+1900 Die routine
+2000 Move routine
+2010 Check routine
+2230 Smell routine
+2300 Objects info
+2480 NumToString (a->b$)
+2500 Take routine
+2700 Kill dragon
+3000 Shoot routine
+3500 Lock/unlock door
+3700 Exit
+3800 Open/close exit-door
+4000 List
+4200 Map
+4500 Wizard (2-6)
+4700 Hermit (1-3)
+5000 Monster move
+5500 Smell disappear
+5600 Dragon move
+5700 Wizard rescue
+6000 Hear/smell
+6200 Find path
+6500 Escape
+6700 Dragon's Lair
+7000 Hall of Fame
+7500 End of game
+8000 Check
+8500 Fight
+
+Caverns a(50, 31)
+1-9	exits
+10	number of exits
+11	pit
+12	muck
+13	coins
+14	key
+15	dragon sword
+16	flying carpet
+17	staff
+18	arrows
+19	spring of water
+20	axe
+(21)	door
+21-26	smell (room, time, room, time, room, time)
+27-30	hearing(time, room, time, room)
+31	# hear/smellables
+32	been there
+
+Characters e(q, 15)
+ 1	location
+ 2	water
+ 3	coins
+ 4	key
+ 5	dragon sword
+ 6	flying carpet
+ 7	magic staff
+ 8	arrows
+ 9	strength
+10	magic
+11	type (1-wizard 2-dwarf 3-elf 4-hobbit 5-human)
+12	dragon slayer
+13	last cavern (escaped = 0)
+14	axes
+15	
+
+Variables
+o	current player
+q	number of players
+lair	location of Dragon's lair
+tre	size of Dragon's treasure
+ent	location of entrance to Dragon's lair
+ex1	first exit
+ex2	second exit
+swo	dragon sword
+dra	dragon
+d(q+1)	serpents
+b(q+2)	goblins
+c(q+3)	orcs
+hermit	location of hermit
+fire	location of Cavern of Fame
+
+
+TODO:
+instructions
+which cavern you came from
+
+--------------------------------
+You need a key to open one of the two doors leading out of the Catacombs.
+Beware the terrible monsters inhabiting the Catacombs. Once they find you, they will hunt you mercilessly. 
+The Orcs are mostly a nuisance, but they dig pits for you to fall in.
+The Goblins are a bit more dangerous; try to pick them off using you bow and arrows.
+The Giant Serpents are very dagnerous and difficult to kill. They are fairly slow, but the leave poisonous muck behind...
+The Dragon is asleep at the beginning of the game. Try not to wake him, unless you have the legendary Dragon Sword. If not, your only option is to run as fast as you can!
+To begin with, you have only a bow and arrows (a human has an axe as well). Use them wisely, as you only have a limited amount of arrows. Once you find an axe you can fight the monsters in the same cavern, but you will rarely emerge unscathed from a fight.
+If you are lucky, a wizard may offer to sell you a Magic Staff. Buy one if you can, especially if you are a Wizard or an Elf!
+The Hermit knows the layout of the Catacombs. He may help you escape if you find him.

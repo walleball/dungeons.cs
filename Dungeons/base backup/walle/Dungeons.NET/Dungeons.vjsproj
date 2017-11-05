@@ -1,0 +1,158 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectType>Local</ProjectType>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{38104E3C-33A5-4F2A-8CF8-7EAA53641FAC}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <AssemblyKeyContainerName>
+    </AssemblyKeyContainerName>
+    <AssemblyName>Dungeons</AssemblyName>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+    <DefaultClientScript>JScript</DefaultClientScript>
+    <DefaultHTMLPageLayout>Grid</DefaultHTMLPageLayout>
+    <DefaultTargetSchema>IE50</DefaultTargetSchema>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Dungeons</RootNamespace>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <StartupObject>
+    </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>false</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BaseAddress>285212672</BaseAddress>
+    <ConfigurationOverrideFile>
+    </ConfigurationOverrideFile>
+    <DefineConstants>TRACE</DefineConstants>
+    <DebugSymbols>false</DebugSymbols>
+    <NoWarn>
+    </NoWarn>
+    <Optimize>true</Optimize>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <WarningLevel>4</WarningLevel>
+    <DebugType>none</DebugType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System">
+      <Name>System</Name>
+    </Reference>
+    <Reference Include="System.Data">
+      <Name>System.Data</Name>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Name>System.XML</Name>
+    </Reference>
+    <Reference Include="vjslib">
+      <Name>vjslib</Name>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Balrog.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Chest.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Console.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Device.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Dragon.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DungeonRecord.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="GameEngine.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Goblin.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainClass.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Maze.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Monster.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MonsterCounter.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Orc.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Player.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlayerRecord.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="RandomNumber.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Room.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Sequence.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Serpent.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Spider.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Staff.jsl" />
+    <Compile Include="StaffContainer.jsl" />
+    <Compile Include="Timespan.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Troll.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Utility.jsl">
+      <SubType>Code</SubType>
+    </Compile>
+    <Content Include="Catacombs guide.txt" />
+    <Content Include="Catacombs source.txt" />
+    <Content Include="ReadMe.txt" />
+    <Content Include="TODO.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualJSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,839 @@
+   1 REM ***DUNGEON SET-UP***   
+   2 DIM x$(5,10): DIM x(5)     
+   3 FOR n=1 TO 5: LET x$(n)="Olof W": NEXT n                   
+   4 GO SUB 800                 
+  10 DIM a(50,32)               
+  11 LET cont=0                 
+  12 LET tre=INT (RND*15)+16    
+  15 LET lair=INT (RND*49)+2    
+  20 FOR n=1 TO 50              
+  22 IF n=lair THEN GO TO 80    
+  25 LET b=0                    
+  30 FOR m=1 TO 2               
+  40 LET a=INT (RND*50)+1: IF a=n OR a(a,1)=n OR a(a,2)=n OR b=a OR a=lair THEN GO TO 40        
+  45 LET b=a                    
+  50 LET a(n,m)=a               
+  60 NEXT m                     
+  70 LET a(n,10)=3              
+  80 NEXT n                     
+  90 FOR n=1 TO 50              
+  95 IF n=lair THEN GO TO 130   
+ 100 FOR m=1 TO 2               
+ 110 LET b=a(n,m): LET a(b,a(b,10))=n: LET a(b,10)=a(b,10)+1    
+ 120 NEXT m                     
+ 130 NEXT n                     
+ 140 FOR n=1 TO 50              
+ 145 IF n=lair THEN GO TO 210   
+ 150 DIM b(9)                   
+ 160 FOR m=1 TO 9: LET b(m)=a(n,m): NEXT m                      
+ 165 FOR o=1 TO 9               
+ 170 LET b=55: LET a=0          
+ 180 FOR m=1 TO 9               
+ 190 IF b(m)<b AND b(m)<>0 THEN LET b=b(m): LET a=m             
+ 200 NEXT m                     
+ 202 IF a=0 THEN GO TO 210      
+ 205 LET a(n,o)=b(a): LET b(a)=0
+ 208 NEXT o                     
+ 210 NEXT n                     
+ 211 DIM b(2): FOR o=1 TO 2: LET ro=9                           
+ 212 FOR m=1 TO 50: LET n=INT (RND*49)+2: IF a(n,10)>=ro AND a(n,10)<10 THEN GO TO 215          
+ 214 NEXT m: LET ro=ro-1: GO TO 212                             
+ 215 LET b(o)=n: NEXT o: IF b(1)=b(2) THEN GO TO 211            
+ 216 FOR m=a(n,10) TO 2 STEP -1 
+ 217 IF a(n,m-1)<lair THEN GO TO 220                            
+ 218 LET a(n,m)=a(n,m-1)        
+ 219 NEXT m                     
+ 220 LET a(n,m)=lair            
+ 225 LET a(lair,1)=n: LET a(lair,10)=2                          
+ 226 LET ent=n                  
+ 227 LET fire=b(1)              
+ 230 LET dead=0: LET ex2=0      
+ 231 FOR n=1 TO 2               
+ 232 LET a=INT (RND*49)+2       
+ 234 IF n=1 THEN LET ex1=a: LET a(a,21)=1                       
+ 235 IF n=2 THEN LET ex2=a: LET a(a,21)=1                       
+ 236 IF ex1=ex2 THEN GO TO 232  
+ 238 NEXT n                     
+ 240 REM ***CHARACTERS***       
+ 300 INPUT "How many players?  ";q                              
+ 340 DIM e(q,15): FOR n=1 TO q: LET a=INT (RND*5)+1             
+ 345 CLS                        
+ 351 PRINT AT 0,0;"WHAT DO YOU WANT TO BE, NR ";n;"."           
+ 352 PRINT '"0  RANDOM"'"1  WIZARD"'"2  DWARF"'"3  ELF"'"4  HOBBIT"'"5  HUMAN"                  
+ 353 LET b$=INKEY$              
+ 354 IF b$<"0" OR b$>"5" THEN GO TO 353                         
+ 355 IF b$<>"0" THEN LET a=VAL b$                               
+ 360 LET mag=5*(a=1)+2*(a=3)    
+ 370 LET str=5*(a=1)+10*(a=2)+8*(a=3)+6*(a=4)+7*(a=5)           
+ 380 LET e(n,11)=a: LET e(n,10)=mag: LET e(n,9)=str             
+ 385 LET e(n,8)=5+3*(a=3)-2*(a=5)                               
+ 386 LET e(n,1)=1               
+ 387 LET e(n,2)=20              
+ 388 LET e(n,3)=3*(a=1)         
+ 389 LET e(n,14)=(a=5)          
+ 390 NEXT n                     
+ 400 DIM a$(5,6)                
+ 403 DATA "WIZARD","DWARF","ELF","HOBBIT","HUMAN"               
+ 405 RESTORE 400                
+ 410 FOR n=1 TO 5: READ b$: LET a$(n)=b$: NEXT n                
+ 414 CLS                        
+ 420 REM ***OBJECTS***          
+ 425 REM SPRING OF WATER        
+ 430 FOR n=1 TO 5               
+ 440 LET a=INT (RND*49)+2: IF a(a,19)=1 THEN GO TO 440          
+ 450 LET a(a,19)=1: NEXT n      
+ 455 REM THE DRAGON SWORD       
+ 460 LET a=INT (RND*49)+2: LET a(a,15)=1: LET swo=a             
+ 462 IF a(a,10)<4 THEN GO TO 460
+ 465 REM KEY                    
+ 470 FOR n=1 TO q*2+2           
+ 480 LET a=INT (RND*49)+2: LET a(a,14)=1: NEXT n                
+ 485 REM FLYING CARPETS         
+ 490 FOR n=1 TO q*2+1           
+ 500 LET a=INT (RND*49)+2: IF a(a,16)=1 THEN GO TO 500          
+ 510 LET a(a,16)=1: NEXT n      
+ 515 REM ARROWS                 
+ 520 FOR n=1 TO q*2+2           
+ 530 LET a=INT (RND*49)+2: LET a(a,18)=a(a,18)+INT (RND*5)+1: NEXT n                            
+ 535 REM GOLD COINS             
+ 540 FOR n=1 TO q*8             
+ 545 LET a=INT (RND*49)+2: LET a(a,13)=a(a,13)+INT (RND*5): NEXT n                              
+ 550 REM AXES                   
+ 552 FOR n=1 TO q*2+2           
+ 554 LET a=INT (RND*49)+2: IF a(a,20)=1 THEN GO TO 554          
+ 556 LET a(a,20)=1: NEXT n      
+ 560 REM DOORS                  
+ 562 FOR n=1 TO 5               
+ 565 LET a=INT (RND*50)+1: IF a(a,21)=1 THEN GO TO 565          
+ 567 LET b=INT (RND*(a(a,10)-1))+1: IF a(a(a,b),21)=1 THEN GO TO 565                            
+ 572 FOR m=1 TO a(a(a,b),10)    
+ 573 IF a(a,b)>100 THEN GO TO 565                               
+ 574 IF a(a(a,b),m)=a THEN GO TO 580                            
+ 576 NEXT m: STOP               
+ 580 LET a(a(a,b),m)=a(a(a,b),m)+200                            
+ 585 LET a(a,21)=1: LET a(a(a,b),21)=1: LET a(a,b)=a(a,b)+200   
+ 590 NEXT n                     
+ 600 REM ***MONSTER SET-UP***   
+ 610 REM DRAGON                 
+ 620 LET dra=lair               
+ 625 LET drag=0                 
+ 630 REM SERPENTS               
+ 640 DIM d(q+1)                 
+ 650 FOR n=1 TO q+1             
+ 660 LET d(n)=INT (RND*49)+2    
+ 670 NEXT n                     
+ 680 REM GOBLINS                
+ 690 DIM b(q+2)                 
+ 700 FOR n=1 TO q+2             
+ 710 LET b(n)=INT (RND*49)+2    
+ 720 NEXT n                     
+ 730 REM ORCS                   
+ 740 DIM c(q+3)                 
+ 750 FOR n=1 TO q+3             
+ 760 LET c(n)=INT (RND*49)+2    
+ 770 NEXT n                     
+ 771 DIM w(q)                   
+ 776 REM HERMIT                 
+ 778 LET hermit=INT (RND*49)+2: IF hermit=ex1 OR hermit=ex2 OR hermit=lair OR hermit=ent OR hermit=fire OR a(hermit,10)=3 THEN GO TO 778                        
+ 780 GO TO 1000                 
+ 800 REM ***INSTRUCTIONS***     
+ 810 PRINT "   WELCOME TO THE CATACOMBS"                        
+ 820 PRINT "   ------------------------"                        
+ 830 PRINT "You will need a key to open a door leading out to freedom."                       
+ 840 PRINT '"Beware the terrible monsters."                     
+ 850 PRINT "The Orcs are mostly a nuisance, but they dig deadly pits."                          
+ 860 PRINT "The Goblins are a bit more dangerous; pick them off with your bow and arrows."                               
+ 870 PRINT "The Giant Serpents are difficult to kill. They are fairly slow,  but leave poisonous muck behind."                   
+ 880 PRINT "Do not wake the Dragon! If you  do not possess the legendary Dragon Sword, your only option is to run as fast as you can."                      
+ 890 PRINT '"Until you find a weapon, you can only kill the monsters with your bow and arrows."   
+ 999 RETURN                     
+1000 FOR n=1 TO q: LET w(n)=INT (RND*20): NEXT n                
+1002 FOR o=1 TO q               
+1005 IF e(o,9)=0 THEN GO TO 1800
+1010 IF q>1 THEN CLS : PRINT AT 10,8;o;"  ";a$(e(o,11)): PAUSE 1: PAUSE 0                       
+1011 LET dead=0                 
+1013 LET a(e(o,1),32)=1         
+1014 LET loop=0: LET wiz=0      
+1015 REM ***ENCOUNTERS***       
+1016 IF w(o)=0 THEN LET wiz=1   
+1017 CLS                        
+1020 LET enc=0: LET ro=e(o,1)   
+1021 LET en=0                   
+1022 IF wiz=1 THEN GO SUB 4500  
+1025 IF ro=fire THEN GO SUB 7000
+1030 IF ro<>dra THEN GO TO 1060 
+1031 IF e(o,5)=1 THEN GO SUB 2700: GO TO 1101                   
+1032 LET en=1                   
+1035 PRINT "Oh! Shit!  The Dragon caught ya!";: LET a1=6: LET a2=1: GO SUB 1500                 
+1040 IF dead=0 THEN PRINT "But you survived his deadly fire": GO TO 1060                        
+1050 IF dead=1 THEN PRINT "He made you an ex-";a$(e(o,11));".": GO TO 1900                      
+1060 FOR n=1 TO q+1             
+1065 IF ro<>d(n) THEN GO TO 1100
+1066 LET en=1                   
+1070 PRINT "Cripes!  A Giant Serpent just entered your cavern.": LET a1=3: LET a2=1: GO SUB 1500                              
+1080 IF dead=0 THEN PRINT "But you managed to avoid its violent attack.": GO TO 1100         
+1090 IF dead=1 THEN PRINT "And it swallowed you easily.": GO TO 1900                            
+1100 NEXT n                     
+1110 FOR n=1 TO q+2             
+1115 IF ro<>b(n) THEN GO TO 1150
+1117 LET en=1                   
+1120 PRINT "Help!  A Goblin attacks you withhis javelin.": LET a1=2: LET a2=1: GO SUB 1500      
+1130 IF dead=0 THEN PRINT "But his throw did only minor damages.": GO TO 1150                
+1140 IF dead=1 THEN PRINT "What a pity! He pierced your chest.": GO TO 1900                  
+1150 NEXT n                     
+1160 FOR n=1 TO q+3             
+1165 IF ro<>c(n) THEN GO TO 1200
+1166 LET en=1                   
+1170 PRINT "Ooouuch!  An Orc is running at you with his axe above his head.": LET a1=2: LET a2=0: GO SUB 1500                  
+1180 IF dead=0 THEN PRINT "But you avoided his blow.": GO TO 1200                               
+1190 IF dead=1 THEN PRINT "Bad luck! It cleaved your skull.": GO TO 1900                        
+1200 NEXT n                     
+1250 LET herm=0                 
+1260 IF ro=hermit THEN LET herm=1                               
+1270 REM ***CLOSE-BY MONSTERS***
+1275 LET targets=0              
+1280 FOR n=1 TO a(ro,10)-1      
+1290 LET roo=a(ro,n)            
+1295 IF roo>100 THEN LET roo=roo-100                            
+1300 IF roo=dra THEN PRINT "RUN FOOL!  It's getting hot!": LET targets=targets+1                
+1310 FOR m=1 TO q+1             
+1320 IF roo=d(m) THEN PRINT "You can hear something hissing.": LET targets=targets+1            
+1330 NEXT m                     
+1340 FOR m=1 TO q+2             
+1350 IF roo=b(m) THEN PRINT "You can hear a Goblin grunting.": LET targets=targets+1            
+1360 NEXT m                     
+1370 FOR m=1 TO q+3             
+1380 IF roo=c(m) THEN PRINT "You can hear an Orc cursing.": LET targets=targets+1               
+1390 NEXT m                     
+1410 IF roo=hermit THEN PRINT "You can hear someone talking to himself. The voice comes from cavern ";hermit;"."         
+1415 IF roo>100 THEN GO TO 1450 
+1420 IF a(roo,15)=1 THEN PRINT "You can feel the presence of a potent power."                  
+1425 IF roo=fire THEN PRINT "Some strange illumination flows out of the passage leading to cavern ";fire;"."                  
+1430 IF a(roo,11)=1 THEN PRINT "You can feel a draft."          
+1440 IF a(roo,12) THEN PRINT "It stinks of serpent-muck."       
+1445 IF loop THEN RETURN        
+1450 NEXT n                     
+1455 GO SUB 2300                
+1460 REM ***HEAR ROUTINE***     
+1462 FOR n=1 TO a(ro,10)-1      
+1465 LET b=a(ro,n): IF b>100 THEN LET b=b-100                   
+1466 IF b>100 THEN GO TO 1485   
+1470 FOR m=28 TO 30 STEP 2      
+1471 IF a(b,m)=0 THEN GO TO 1480
+1472 IF a(b,m-1)=ro THEN GO TO 1477                             
+1474 NEXT m                     
+1476 LET m=INT (RND*2)+28       
+1477 LET a(b,31)=a(b,31)-1      
+1480 LET a(b,m)=2: LET a(b,m-1)=ro: LET a(b,31)=a(b,31)+1       
+1485 NEXT n                     
+1490 GO TO 1600                 
+1500 REM ***DAMAGE ROUTINE***   
+1505 LET dead=0: LET str=e(o,9): LET dam=INT (RND*a1)+a2: LET str=str-dam                       
+1510 LET e(o,9)=str             
+1520 IF str<=0 THEN LET dead=1: LET e(o,9)=0                    
+1525 LET enc=enc+10             
+1530 RETURN                     
+1600 REM ***ROOM INFORMATION*** 
+1606 IF wiz=2 THEN GO TO 1800   
+1607 IF herm=1 THEN GO SUB 4700 
+1610 PRINT '"You are in cavern ";ro                             
+1620 PRINT "There are passages leading to:"                     
+1630 FOR n=1 TO a(ro,10)-1      
+1632 IF a(ro,n)>100 THEN GO TO 1650                             
+1635 IF a(a(ro,n),32)=0 THEN INVERSE 1                          
+1636 IF a(ro,n)=e(o,13) THEN FLASH 1                            
+1640 PRINT a(ro,n);: INVERSE 0: FLASH 0: PRINT "  ";            
+1650 NEXT n                     
+1652 PRINT : FOR n=1 TO a(ro,10)-1                              
+1653 IF a(ro,n)>100 AND a(ro,n)<200 THEN PRINT "An Open Door leading to ";: INVERSE a(a(ro,n)-100,32)=0: FLASH e(o,13)=a(ro,n)-100: PRINT a(ro,n)-100: LET door=1: INVERSE 0: FLASH 0           
+1654 NEXT n                     
+1655 IF dead=1 THEN PRINT "An Open Door leading to FREEDOM!": LET door=1                        
+1652 PRINT : FOR n=1 TO a(ro,10)-1                              
+1653 IF a(ro,n)>100 AND a(ro,n)<200 THEN PRINT "An Open Door leading to ";: INVERSE a(a(ro,n)-100,32)=0: FLASH e(o,13)=a(ro,n)-100: PRINT a(ro,n)-100: LET door=1: INVERSE 0: FLASH 0           
+1654 NEXT n                     
+1655 IF dead=1 THEN PRINT "An Open Door leading to FREEDOM!": LET door=1                        
+1656 REM ***OPTIONS***          
+1660 PRINT '"What Do You Wish To Do ?"'"0   Look"'"1   Move"    
+1661 IF targets>0 AND e(o,8)>0 THEN  PRINT "2   Shoot"          
+1662 IF cont>0 THEN  PRINT "3   Take"                           
+1663 IF door>0 AND e(o,4)>0 THEN  PRINT "4   Unlock/Lock Door"  
+1664 PRINT "5   Inventory"      
+1665 IF dead=1 THEN PRINT "6   Escape Through The Exit-door"    
+1666 IF en=1 AND e(o,14)>0 OR en=1 AND e(o,7)+e(o,5)>0 THEN PRINT "7   Fight"                   
+1667 PRINT "8   Map"            
+1670 LET b$=INKEY$              
+1680 IF b$="" THEN GO TO 1670   
+1685 IF b$="0" THEN GO TO 1270  
+1690 IF b$="1" THEN GO SUB 2000: FOR n=1 TO 100: NEXT n: GO TO 1750                             
+1700 IF b$="3" THEN GO SUB 2500: FOR n=1 TO 100: NEXT n: GO TO 1750                             
+1710 IF b$="2" THEN GO SUB 3000: FOR n=1 TO 100: NEXT n: GO TO 1750                             
+1720 IF b$="5" THEN GO SUB 4000: GO TO 1660                     
+1725 IF b$="4" THEN GO SUB 3500: FOR n=1 TO 100: NEXT n: GO TO 1660                             
+1727 IF b$="6" AND dead=1 THEN GO SUB 6500                      
+1728 IF en=1 AND b$="7" AND e(o,14)+e(o,7)+e(o,5)>0 THEN GO TO 8500                             
+1729 IF en=0 AND b$="7" THEN PRINT "Fight Who ???  Idiot !!!": FOR n=1 TO 200: NEXT n: GO TO 1735                               
+1730 IF b$="7" AND e(o,14)+e(o,7)+e(o,5)=0 THEN PRINT "With What? You Sod !!!": FOR n=1 TO 200: NEXT n                       
+1732 IF b$="8" THEN GO SUB 4200: GO TO 1660                     
+1735 IF b$=CHR$ 13 THEN GO TO 1750                              
+1740 IF b$<"0" OR b$>"8" THEN GO TO 1670                        
+1760 IF e(o,2)<0 THEN PRINT '"You have thirst to death.": GO TO 1900                            
+1770 IF e(o,2)<=5 THEN PRINT '"You feel thirsty.": FOR n=1 TO 100: NEXT n                       
+1800 NEXT o                     
+1810 CLS                        
+1850 GO SUB 5000                
+1860 GO TO 1000                 
+1900 PRINT '"You Died!": PAUSE 200: LET e(o,9)=0                
+1910 FOR n=3 TO 8               
+1920 LET a(e(o,1),n+10)=a(e(o,1),n+10)+e(o,n)                   
+1930 NEXT n                     
+1935 LET a(e(o,1),20)=a(e(o,1),20)+e(o,14)                      
+1940 FOR n=1 TO q               
+1950 IF e(n,9)>0 THEN GO TO 1800
+1960 NEXT n                     
+1970 GO TO 7500                 
+2000 REM ***MOVE ROUTINE***     
+2004 PRINT '"Where Do You Wish To Go ?"                         
+2005 GO SUB 2010                
+2006 GO TO 2110                 
+2010 REM ***CHECK ROUTINE***    
+2011 INPUT b$                   
+2015 LET no=0                   
+2020 FOR n=1 TO LEN b$          
+2030 IF b$(n)<"0" OR b$(n)>"9" THEN GO TO 2010                  
+2040 NEXT n                     
+2050 IF b$="" THEN GO TO 2010   
+2060 LET a=VAL b$               
+2070 IF a=0 OR a>50 THEN GO TO 2010                             
+2080 FOR n=1 TO a(ro,10)-1      
+2090 IF a(ro,n)=a OR a(ro,n)-100=a THEN RETURN                  
+2100 NEXT n                     
+2102 LET n=a(ro,10)             
+2105 LET no=1: RETURN           
+2110 IF a=e(o,1) THEN PRINT '"Moron! You're already there."'': GO TO 1270                       
+2115 IF no=1 THEN GO SUB 6200: IF no>1 THEN GO TO 1270          
+2120 IF no=1 THEN PRINT ''"Sorry, but no passage lead to cavern ";a;".": GO TO 1270           
+2200 IF e(o,11)=4 AND a(a,12)=1 THEN PRINT '"No! Stop!  This way STINKS.": GO TO 2000           
+2210 LET e(o,13)=e(o,1)         
+2215 LET e(o,1)=a               
+2220 PRINT '"You walk through a passage to cavern ";a;"."     
+2225 LET e(o,2)=e(o,2)-1        
+2230 REM ***SMELL ROUTINE***    
+2240 FOR n=22 TO 26 STEP 2      
+2250 IF a(ro,n)=0 THEN GO TO 2280                               
+2260 IF a(ro,n-1)=a THEN GO TO 2275                             
+2270 NEXT n                     
+2272 LET n=INT (RND*3)*2+22     
+2275 LET a(ro,31)=a(ro,31)-1    
+2280 LET a(ro,n)=4: LET a(ro,n-1)=a: LET a(ro,31)=a(ro,31)+1    
+2290 RETURN                     
+2300 REM ***OBJECTS INFO***     
+2310 PRINT '"The room contains:"'                               
+2315 LET cont=0: LET door=0     
+2320 IF a(ro,11)<>1 THEN GO TO 2355                             
+2330 PRINT " A PIT ": IF e(o,6)>0 THEN PRINT "Oooh! That was close! Your flying carpet flew you over it": GO TO 2350       
+2340 PRINT "Aargh! You've fallen into a pit!": LET e(o,9)=0: GO TO 1900                         
+2350 LET cont=cont+100          
+2355 IF a(ro,12)=1 THEN PRINT " SERPENT-MUCK "'"Ooops!  You have run into some poisonous serpent-muck.": LET e(o,9)=0: GO TO 1900                              
+2356 GO SUB 2360                
+2358 GO TO 2420                 
+2360 LET a=a(ro,13): GO SUB 2480: IF a<>0 THEN PRINT b$;" Gold Coin";"s" AND a>1                
+2370 LET a=a(ro,14): GO SUB 2480: IF a<>0 THEN PRINT b$;" Key";"s" AND a>1                      
+2380 IF a(ro,15)=1 THEN PRINT "The Dragon Sword": LET cont=cont+1                               
+2390 LET a=a(ro,16): GO SUB 2480: IF a<>0 THEN PRINT b$;" Flying Carpet";"s" AND a>1            
+2400 LET a=a(ro,17): GO SUB 2480: IF a<>0 THEN PRINT b$;" Magic Staff";"s" AND a>1              
+2410 LET a=a(ro,18): GO SUB 2480: IF a<>0 THEN PRINT b$;"n" AND a=1;" Arrow";"s" AND a>1        
+2412 LET a=a(ro,19): GO SUB 2480: IF a<>0 THEN PRINT "A Spring of Water"                        
+2413 LET a=a(ro,20): GO SUB 2480: IF a<>0 THEN PRINT b$;"n" AND a=1;" Axe";"s" AND a>1          
+2414 IF ro=lair AND tre>0 THEN PRINT "A Pile Of Gold Coins": LET cont=cont+1                    
+2415 RETURN                     
+2420 FOR n=1 TO q               
+2430 IF e(n,1)<>ro OR n=o THEN GO TO 2460                       
+2440 IF e(n,9)=0 THEN PRINT "The Corpse Of ";                   
+2445 LET cont=cont+100          
+2450 PRINT "A";: IF e(n,11)=3 THEN PRINT "n";                   
+2455 PRINT " ";a$(e(n,11))      
+2460 NEXT n                     
+2465 FOR n=1 TO a(ro,10)        
+2470 IF a(ro,n)>200 THEN PRINT "A Closed Door": LET cont=cont+100: LET door=1                   
+2475 NEXT n                     
+2476 IF ro=ex1 OR ro=ex2 OR ro=ex1-100 OR ro=ex2-100 THEN GO SUB 3700: LET door=1               
+2477 IF cont=0 THEN PRINT "Nothing."                            
+2478 IF cont>=100 THEN LET cont=cont-100: GO TO 2478            
+2479 RETURN                     
+2480 IF a=1 THEN LET b$="A"     
+2481 IF a=2 THEN LET b$="Two"   
+2482 IF a=3 THEN LET b$="Three" 
+2483 IF a=4 THEN LET b$="Four"  
+2484 IF a=5 THEN LET b$="Five"  
+2485 IF a=6 THEN LET b$="Six"   
+2486 IF a=7 THEN LET b$="Seven" 
+2487 IF a=8 THEN LET b$="Eight" 
+2488 IF a=9 THEN LET b$="Nine"  
+2489 IF a=10 THEN LET b$="Ten"  
+2490 IF a=11 THEN LET b$="Eleven"                               
+2491 IF a=12 THEN LET b$="Twelve"                               
+2492 IF a=13 THEN LET b$="Thirteen"                             
+2493 IF a=14 THEN LET b$="Fourteen"                             
+2494 IF a=15 THEN LET b$="Fifteen"                              
+2495 IF a<>0 THEN LET cont=cont+1                               
+2496 IF a>15 THEN LET b$=STR$ a 2497 RETURN                     
+2500 REM ***TAKE ROUTINE***     
+2505 LET cont=0                 
+2510 FOR n=3 TO 8               
+2515 LET cont=cont+a(ro,10+n)   
+2520 LET e(o,n)=e(o,n)+a(ro,10+n)                               
+2525 LET a(ro,10+n)=0           
+2530 NEXT n                     
+2540 IF a(ro,19)=1 THEN LET e(o,2)=50                           
+2550 LET cont=cont+a(ro,19)     
+2552 IF lair=ro AND tre>0 THEN LET cont=cont+1: LET e(o,3)=e(o,3)+tre: LET tre=0                
+2553 LET cont=cont+a(ro,20): LET e(o,14)=e(o,14)+a(ro,20): LET a(ro,20)=0                       
+2555 PRINT                      
+2560 IF cont=0 THEN PRINT "There is nothing here to take"       
+2565 IF cont<>0 THEN PRINT "Ok! You've taken it up."            
+2570 RETURN                     
+2700 REM ***KILL DRAGON***      
+2710 PRINT "   The Dragon rushes at you..."                     
+2715 PRINT "But before it had time to roast you, you slew it with a fierce- ful swing with the mighty Sword"                    
+2720 PRINT "You are now a DRAGON-SLAYER."                       
+2730 LET dra=0: LET e(o,12)=1: RETURN                           
+3000 REM ***SHOOT ROUTINE***    
+3005 PRINT : LET cont=0         
+3010 IF e(o,7)=0 THEN LET mag=0: GO TO 3100                     
+3020 PRINT "Do You Want To Use Your Staff ?"'                   
+3030 LET b$=INKEY$              
+3040 IF b$="y" THEN LET mag=1: GO TO 3100                       
+3050 IF b$="n" THEN LET mag=0: GO TO 3100                       
+3060 GO TO 3030                 
+3100 IF mag=1 THEN GO TO 3109   
+3102 IF e(o,8)=0 THEN PRINT "You cannot shoot. You have run out of arrows.": LET cont=1: RETURN                   
+3105 LET e(o,8)=e(o,8)-1        
+3109 PRINT "Where Do you Want To Shoot ?"                       
+3110 GO SUB 2010                
+3120 IF no=1 THEN PRINT '"You can't shoot to cavern ";a;".": GO TO 1270                         
+3130 IF mag=0 THEN PRINT '"You shoot an arrow to cavern ";a;".": GO TO 3200                     
+3140 IF INT (RND*5)<e(o,10) THEN PRINT '"You fire a Lightning Bolt to cavern ";a;".": GO TO 3200                             
+3150 PRINT '"Your magical powers failed to produce a Lightning Bolt."                         
+3160 RETURN                     
+3200 PRINT                      
+3202 FOR n=1 TO 50: NEXT n      
+3260 FOR n=1 TO q+3             
+3270 IF c(n)=a THEN LET cont=1: PRINT "You killed an Orc.": LET c(n)=0: IF mag=0 THEN GO TO 3400
+3280 NEXT n                     
+3290 FOR n=1 TO q+2             
+3300 IF b(n)=a THEN LET cont=1: PRINT "You killed a Goblin.": LET b(n)=0: IF mag=0 THEN GO TO 3400                              
+3310 NEXT n                     
+3320 FOR n=1 TO q+1             
+3330 IF d(n)<>a THEN GO TO 3370 
+3340 IF INT (RND*3)<2 OR mag=1 THEN PRINT "You killed a Giant Serpent.": LET d(n)=0: LET cont=1: IF mag=0 THEN GO TO 3400       
+3342 IF mag=1 THEN GO TO 3370   
+3345 LET cont=1                 
+3350 PRINT "You've hit a Giant Serpent. But it survived.": GO TO 3400                       
+3370 NEXT n                     
+3380 IF dra=a THEN PRINT "You've hit the Dragon. But you cannot kill it."              
+3400 IF cont=0 THEN PRINT "That wasn't very clever, was it?": IF mag=0 THEN LET a(a,18)=a(a,18)+1                               
+3405 IF mag=1 AND INT (RND*10)=0 THEN PRINT "The magic staff splintered into glowing fragments.": LET e(o,7)=e(o,7)-1           
+3410 RETURN                     
+3500 REM ***UNLOCK/LOCK DOOR*** 
+3505 IF ro=ex1 OR ro=ex2 OR ro=ex1-100 OR ro=ex2-100 THEN LET dead=1: GO TO 3540                
+3510 FOR n=1 TO a(ro,10)        
+3520 IF a(ro,n)>100 THEN GO TO 3540                             
+3530 NEXT n: PRINT '"What Door, Stupid?": RETURN                
+3540 IF e(o,4)=0 THEN PRINT '"With What Key, Stupid?": RETURN   
+3545 IF dead=1 THEN GO TO 3800  
+3550 LET a(ro,n)=a(ro,n)-100    
+3560 IF a(ro,n)<100 THEN PRINT '"You Locked The Door.": LET a(ro,n)=a(ro,n)+200: GO TO 3580     
+3570 PRINT '"You Opened A Door Leading To Cavern ";a(ro,n)-100;"."                           
+3575 LET roo=a(ro,n)-100: LET loop=1: GO SUB 1295: LET loop=0   
+3580 LET ro1=a(ro,n)            
+3590 LET ro1=ro1-100            
+3600 IF ro1>100 THEN GO TO 3590 
+3610 FOR n=1 TO a(ro1,10)       
+3620 IF a(ro1,n)>100 THEN GO TO 3640                            
+3630 NEXT n: STOP               
+3640 LET a(ro1,n)=a(ro1,n)-100  
+3650 IF a(ro1,n)<100 THEN LET a(ro1,n)=a(ro1,n)+200             
+3660 RETURN                     
+3700 REM ***EXIT***             
+3705 LET cont=cont+1            
+3710 IF ro=ex1 OR ro=ex1-100 THEN LET a=ex1                     
+3720 IF ro=ex2 OR ro=ex2-100 THEN LET a=ex2                     
+3730 IF a<100 THEN PRINT "A Closed Door"                        
+3740 IF a>100 THEN LET dead=1   
+3750 RETURN                     
+3800 REM ***OPEN/CLOSE E-DOOR***
+3810 IF ro=ex1 OR ro=ex1-100 THEN LET a=1: LET b=ex1            
+3820 IF ro=ex2 OR ro=ex2-100 THEN LET a=2: LET b=ex2            
+3830 LET b=b-100: IF b<0 THEN LET b=b+200                       
+3840 IF a=1 THEN LET ex1=b      
+3850 IF a=2 THEN LET ex2=b      
+3860 IF b<100 THEN PRINT '"You Locked The Door."                
+3870 IF b>100 THEN PRINT '"You Opened A Door Leeding Out To FREEDOM!!!"                          
+3880 RETURN                     
+4000 REM ***LIST***             
+4010 PRINT '"This is You: ";    
+4020 PRINT a$(e(o,11));"(Pl.";o;")"                             
+4030 PRINT '"STRENGTH",e(o,9)   
+4040 PRINT "MAGIC",e(o,10)      
+4050 PRINT '"   You are carrying:"                              
+4060 PRINT e(o,2);" Units of Water"                             
+4070 LET a=e(o,8): GO SUB 2480: IF a>0 THEN PRINT b$;"n" AND a=1;" Arrow";"s" AND a>1           
+4080 LET a=e(o,7): GO SUB 2480: IF a>0 THEN PRINT b$;" Magic Staff";"s" AND a>1                 
+4090 LET a=e(o,6): GO SUB 2480: IF a>0 THEN PRINT b$;" Flying Carpet";"s" AND a>1               
+4100 LET a=e(o,4): GO SUB 2480: IF a>0 THEN PRINT b$;" Key";"s" AND a>1                         
+4105 LET a=e(o,14): GO SUB 2480: IF a>0 THEN PRINT b$;"n" AND a=1;" Axe";"s" AND a>1            
+4110 IF e(o,5)=1 THEN PRINT "The Dragon Sword"                  
+4120 LET a=e(o,3): GO SUB 2480: IF a>0 THEN PRINT b$;" Gold Coin";"s" AND a>1                   
+4130 RETURN                     
+4200 REM ***MAP***              
+4205 CLS                        
+4210 FOR n=1 TO 50              
+4215 LET tmp=0                  
+4220 IF a(n,32)<>1 THEN GO TO 4300                              
+4230 PRINT '" " AND n<10;n;": ";
+4240 FOR m=1 TO a(n,10)-1       
+4250 IF a(n,m)>100 THEN LET tmp=a(n,m)                          
+4260 IF a(n,m)<100 THEN PRINT INVERSE a(a(n,m),32)=0;a(n,m); INVERSE 0;" ";                     
+4270 NEXT m                     
+4280 IF tmp>200 THEN PRINT "door";: GO TO 4300                  
+4290 IF tmp>100 THEN PRINT "door:"; INVERSE a(tmp-100,32)=0;tmp-100; INVERSE 0;                 
+4294 IF n=ex1 OR n=ex2 THEN PRINT "door";                       
+4296 IF n=ex1-100 OR n=ex2-100 THEN PRINT "exit";               
+4300 NEXT n                     
+4305 PRINT                      
+4310 RETURN                     
+4500 REM ***WIZARD***           
+4501 LET a=0: LET a=a+(dra=ro): FOR n=1 TO q+1: LET a=a+(d(n)=ro): NEXT n: FOR n=1 TO q+2: LET a=a+(b(n)=ro): NEXT n: FOR n=1 TO q+3: LET a=a+(c(n)=ro): NEXT n 
+4505 PRINT "Suddenly a cloud of smoke appears before you and a Wizard materializes."      
+4506 IF a>0 THEN GO SUB 5700    
+4510 PRINT "The Wizard says:"'"  'Greetings, ";a$(e(o,11))      
+4520 PRINT "   How many Gold Coins would you offer for a Magic Staff?'"                       
+4522 LET a=e(o,3): GO SUB 2480: PRINT '"(You have ";"no" AND a=0;b$ AND a>0;" coins)"           
+4530 INPUT a                    
+4540 LET b=INT (RND*5)+2        
+4550 IF a=0 THEN PRINT '"  'Very well it was up to you.'": GO TO 4690                           
+4555 IF a<=e(o,3) THEN GO TO 4600                               
+4560 PRINT '"  'You do not have that many Gold Coins. Did you think that you could fool me?"                        
+4570 PRINT "   Such an insult cannot be tolerated.  For that, you will be punished. I will return to you later, if you are still breathing at that time.'"     
+4580 PRINT ''"Suddenly a black darkness falls upon you and when it clears you find that you are in another cavern..."        
+4590 LET e(o,1)=INT (RND*50)+1: IF e(o,1)=ro THEN GO TO 4590    
+4592 FOR n=1 TO 200: NEXT n     
+4595 LET wiz=2: RETURN          
+4600 IF a>=b THEN GO TO 4650    
+4610 PRINT '"  'What!!!   Do you think that a Magic Staff is nothing but a piece of wood?" 
+4620 PRINT "   I will tell you. It is very rare, very useful and VERY valuable."       
+4630 PRINT "   Be ready to offer more Gold Coins next time.'": GO TO 4690                   
+4650 PRINT '"  'Thank you very much.'"                          
+4660 PRINT ''"The Wizard takes the coins and says some magical words..."                       
+4670 PRINT '"Suddenly materializes a Magic Staff in your hand."                               
+4680 LET e(o,3)=e(o,3)-a: LET e(o,7)=e(o,7)+1                   
+4690 PRINT '"The Wizard dematerializes in a  cloud of smoke.": RETURN                           
+4700 REM ***HERMIT***           
+4710 PRINT '"You have entered the cavern of the hermit. He says:"                            
+4720 PRINT '"  'Welcome to my simple dwelling  Noble Adventurer."                              
+4730 PRINT "   I like Gold very, very much. Will you not give some Gold Coins to a decrepit cripple like me, eh?"    
+4740 PRINT "   Of course you will, how could that generous heart of yours resist the plight of a poor soul."           
+4750 PRINT "   How many Gold Coins will you contribute to help me at the end of my life?'"
+4755 LET a=e(o,3): GO SUB 2480: PRINT '"(You have ";"no" AND a=0;b$ AND a>0;" coins)"           
+4760 INPUT a                    
+4765 IF a>e(o,3) THEN PRINT '"You do not have that many coins.": GO TO 4760                     
+4770 IF a=0 THEN PRINT '"  'What!?  How can you refuse me the consolation of wealth, the one consolation I have left?'"''"  'You are in truth greedy.'": RETURN                              
+4780 LET b=INT (RND*3)+1        
+4790 PRINT ''"  'I thank you from the bottom of my heart. You have indeed done a good deed by aiding an old and helpless man.'"                        
+4800 LET e(o,3)=e(o,3)-a        
+4810 IF a<b THEN RETURN         
+4820 PRINT '"  'In return for your goodness I am willing to share some lethal information about the Catacombs. What kind of information do you require?'"                               
+4830 PRINT '"1  Exits"'"2  Dragon Sword"'"3  Dragon's Lair"'"4  Cavern of Fame"                 
+4840 INPUT b$: IF b$<"1" OR b$>"4" THEN GO TO 4840              
+4845 IF b$<>"1" THEN GO TO 4870 
+4850 PRINT ''"  'The exits are in caverns ";ex1;" and ";ex2;"."'"   To get there you must pass cavern ";            
+4851 LET a(ex1,32)=1: LET a(ex2,32)=1                           
+4852 FOR n=1 TO 2               
+4854 IF n=1 THEN LET a=ex1      
+4856 IF n=2 THEN LET a=ex2      
+4858 FOR m=1 TO a(a,10)-2       
+4860 LET b=a(a,m)               
+4862 GO SUB 4950                
+4865 PRINT c$;", ";             
+4866 NEXT m: NEXT n             
+4868 LET b=a(ex1,a(ex1,10)-1): GO SUB 4950: PRINT c$;" or ";: LET b=a(ex2,a(ex2,10)-1): GO SUB 4
+950: PRINT c$                   
+4869 RETURN                     
+4870 IF b$<>"2" THEN GO TO 4880 
+4871 LET a(swo,32)=1            
+4872 PRINT ''"  'The Dragon Sword is hidden in cavern ";swo;". To get there you must pass cavern"'"   ";                
+4873 FOR n=1 TO a(swo,10)-3     
+4874 LET b=a(swo,n)             
+4875 GO SUB 4950                
+4876 PRINT c$;", ";             
+4877 NEXT n                     
+4878 LET b=a(swo,n): GO SUB 4950: PRINT c$;" or ";: LET b=a(swo,n+1): GO SUB 4950: PRINT c$;".'"
+4879 RETURN                     
+4880 IF b$<>"3" THEN GO TO 4900 
+4881 LET a(lair,32)=1           
+4882 PRINT ''"  'The Dragon has its lair in cavern ";lair;". The entrance is in cavern ";ent;".'"                    
+4885 RETURN                     
+4900 PRINT ''"  'The Cavern Of Fame lies in cavern ";fire;".'": RETURN                     
+4950 LET c$=STR$ b              
+4960 IF LEN c$=3 THEN LET c$=c$(2 TO 3)                         
+4970 RETURN                     
+5000 REM ***MONSTER MOVE***     
+5010 REM DRAGON                 
+5015 IF drag=1 AND dra>0 AND INT (RND*5)<4 THEN GO TO 5030      
+5020 IF INT (RND*3)=0 OR dra=0 THEN GO TO 5100                  
+5030 LET a=dra: GO SUB 6000     
+5035 IF a=0 THEN GO TO 5100     
+5036 IF tre=0 THEN LET drag=1   
+5038 IF drag=1 THEN GO TO 5050  
+5040 IF a=dra AND dra=lair THEN GO TO 5100                      
+5050 IF a=dra THEN GO SUB 5600  
+5060 FOR n=1 TO a(dra,10)-1     
+5070 IF a=a(dra,n) OR a=a(dra,n)-100 THEN GO TO 5090            
+5080 NEXT n: GO TO 5100         
+5090 IF a>100 THEN LET a=a-100  
+5095 LET dra=a                  
+5100 REM GIANT SERPENTS         
+5110 FOR n=1 TO q+1             
+5111 FOR m=1 TO q               
+5115 IF d(n)=e(m,1) AND e(m,9)>0 THEN GO TO 5199                
+5117 NEXT m                     
+5120 IF INT (RND*2)=0 OR d(n)=0 THEN GO TO 5197                 
+5130 LET a=d(n): GO SUB 6000    
+5135 IF a=0 THEN GO TO 5199     
+5140 FOR m=1 TO a(d(n),10)-1    
+5150 IF a(d(n),m)=a OR a(d(n),m)-100=a THEN GO TO 5195          
+5160 NEXT m                     
+5170 FOR m=1 TO 4               
+5180 LET a=a(d(n),INT (RND*(a(d(n),10)-1))+1): IF a<200 THEN GO TO 5195                         
+5190 NEXT m: GO TO 5199         
+5195 IF a>100 THEN LET a=a-100  
+5196 LET d(n)=a: GO TO 5199     
+5197 IF d(n)=0 OR INT (RND*5)<4 OR d(n)=hermit OR d(n)=lair OR d(n)=ent OR d(n)=swo THEN GO TO 5199                             
+5198 LET a(d(n),12)=1           
+5199 NEXT n                     
+5200 REM GOBLINS                
+5210 FOR n=1 TO q+2             
+5212 FOR m=1 TO q               
+5215 IF b(n)=e(m,1) AND e(m,9)>0 THEN GO TO 5295                
+5217 NEXT m                     
+5220 IF INT (RND*5)<2 OR b(n)=0 THEN GO TO 5293                 
+5230 LET a=b(n): GO SUB 6000    
+5235 IF a=0 THEN GO TO 5295     
+5240 FOR m=1 TO a(b(n),10)-1    
+5250 IF a(b(n),m)=a OR a(b(n),m)-100=a THEN GO TO 5290          
+5255 NEXT m                     
+5260 FOR m=1 TO 4               
+5270 LET a=a(b(n),INT (RND*(a(b(n),10)-1))+1): IF a<200 THEN GO TO 5290                         
+5280 NEXT m: GO TO 5293         
+5290 IF a>100 THEN LET a=a-100  
+5292 LET b(n)=a                 
+5295 NEXT n                     
+5300 REM ORCS                   
+5310 FOR n=1 TO q+3             
+5312 FOR m=1 TO q               
+5315 IF c(n)=e(m,1) AND e(m,9)>0 THEN GO TO 5399                
+5317 NEXT m                     
+5320 IF INT (RND*4)=0 OR c(n)=0 THEN GO TO 5395                 
+5330 FOR m=28 TO 30 STEP 2      
+5340 IF a(c(n),m)>0 THEN LET a=a(c(n),m-1): GO TO 5385          
+5350 NEXT m                     
+5360 FOR m=1 TO 3               
+5370 LET a=a(c(n),INT (RND*(a(c(n),10)-1))+1)                   
+5385 IF a>100 THEN LET a=a-100  
+5386 IF a>100 THEN NEXT m: GO TO 5395                           
+5390 IF a=0 THEN STOP           
+5392 LET c(n)=a                 
+5393 GO TO 5399                 
+5395 IF c(n)=0 OR INT (RND*2)<1 OR c(n)=hermit THEN GO TO 5399  
+5397 LET a(c(n),11)=1           
+5399 NEXT n                     
+5500 REM ***SMELL DISAPPEAR***  
+5510 FOR n=1 TO 50              
+5515 IF a(n,31)=0 THEN GO TO 5560                               
+5520 FOR m=22 TO 30 STEP 2      
+5530 IF a(n,m)=0 THEN NEXT m: GO TO 5550                        
+5540 LET a(n,m)=a(n,m)-1        
+5545 IF a(n,m)=0 THEN LET a(n,m-1)=0: LET a(n,31)=a(n,31)-1     
+5550 NEXT m                     
+5560 NEXT n                     
+5570 RETURN                     
+5600 REM ***DRAGON MOVE***      
+5605 IF drag=1 THEN GO TO 5650  
+5610 IF dra=ent THEN LET a=lair: RETURN                         
+5620 FOR n=1 TO a(dra,10)-1     
+5630 IF a(dra,n)=ent OR a(dra,n)-100=ent THEN LET a=ent: RETURN 
+5640 NEXT n                     
+5650 LET a=a(dra,INT (RND*(a(dra,10)-1)+1))                     
+5660 IF a=0 THEN STOP           
+5670 IF a>100 THEN LET a=a-100  
+5680 IF a>100 THEN LET a=dra: RETURN                            
+5690 RETURN                     
+5700 PRINT "He waves his Magic Staff and a fierceful blast lights the cavern. The blast preserved you and destroyed everything else. Around you lies the blasted remnants of:"                               
+5710 FOR n=1 TO q+1             
+5720 IF d(n)=ro THEN PRINT "A Giant Serpent": LET d(n)=0        
+5730 NEXT n                     
+5740 FOR n=1 TO q+2             
+5750 IF b(n)=ro THEN PRINT "A Goblin": LET b(n)=0               
+5760 NEXT n                     
+5770 FOR n=1 TO q+3             
+5780 IF c(n)=ro THEN PRINT "An Orc": LET c(n)=0                 
+5790 NEXT n                     
+5800 IF dra=ro THEN LET ro=lair: PRINT '"The Dragon was sent away."                             
+5810 PRINT : RETURN             
+6000 REM ***HEAR/SMELL***       
+6001 FOR m=1 TO q               
+6002 IF e(m,1)=a AND e(m,9)>0 THEN LET a=0: RETURN              
+6003 NEXT m                     
+6010 FOR m=1 TO 4               
+6020 LET b=INT (RND*2)*2+28     
+6030 IF a(a,b)>0 THEN LET a=a(a,b-1): RETURN                    
+6040 NEXT m                     
+6050 FOR m=1 TO 6               
+6060 LET b=INT (RND*3)*2+22     
+6070 IF a(a,b)>0 THEN LET a=a(a,b-1): RETURN                    
+6080 NEXT m                     
+6090 RETURN                     
+6200 REM ***FIND PATH***        
+6202 PRINT '"Scanning map..."   
+6210 DIM p(50)                  
+6220 FOR n=1 TO 50: LET p(n)=0: NEXT n                          
+6230 LET p(a)=-a                
+6235 LET process=0              
+6238 REM GO SUB 6499            
+6240 FOR n=1 TO 50              
+6245 IF INKEY$<>"" THEN PRINT "Aborted": RETURN                 
+6250 IF p(n)>=0 THEN GO TO 6390 
+6260 IF n<>e(o,1) THEN GO TO 6330                               
+6265 PRINT "Try " AND no=1;"or " AND no>1;: LET no=no+1         
+6270 LET m=-p(n)                
+6280 PRINT m;"-";               
+6290 LET m=p(m)                 
+6300 IF m<>a THEN GO TO 6280    
+6310 PRINT a'                   
+6320 LET p(n)=0                 
+6325 GO TO 6390                 
+6340 LET process=1              
+6350 FOR m=1 TO a(n,10)-1       
+6353 LET p=a(n,m)               
+6355 IF p>200 THEN GO TO 6370   
+6358 IF p>100 THEN LET p=p-100  
+6359 IF a(n,32)=1 THEN GO TO 6365                               
+6360 IF a(p,32)<>1 THEN GO TO 6370                              
+6365 IF p(p)=0 THEN LET p(p)=1000-n                             
+6370 NEXT m                     
+6380 LET p(n)=-p(n)             
+6390 NEXT n                     
+6400 FOR n=1 TO 50              
+6410 IF p(n)>900 THEN LET p(n)=p(n)-1000                        
+6420 NEXT n                     
+6430 IF process=1 THEN GO TO 6235                               
+6490 RETURN                     
+6499 FOR n=1 TO 50: PRINT p(n);" ";: NEXT n: PRINT : RETURN     
+6500 REM ***ESCAPE***           
+6502 IF q=1 THEN GO TO 6550     
+6505 IF e(o,4)=0 THEN GO TO 6550
+6510 PRINT ''"Do You Wish To Lock The Door Before You Go Out To Enjoy Your Freedom ?"        
+6520 INPUT b$                   
+6530 IF b$<>"y" THEN GO TO 6540 
+6531 IF ro=ex1-100 THEN LET ex1=ex1-100                         
+6532 IF ro=ex2-100 THEN LET ex2=ex2-100                         
+6535 PRINT '"You Have Locked It.": PAUSE 200                    
+6536 GO TO 6550                 
+6540 PRINT '"You Did Not Lock It."                              
+6550 PRINT ''"Congratulations!!! You have escaped the perilous CATACOMBS, Brave ";a$(e(o,11))'"With you, you brought ";e(o,3)'"Gold Coins.   Well done!!!" 
+6555 LET e(o,13)=0              
+6560 LET x=100*e(o,12)+e(o,3)   
+6565 LET e(o,9)=0: LET e(o,1)=0 
+6570 IF x<x(5) THEN GO TO 1800  
+6580 PRINT ''"That Earned You A Place In The Catacombs Hall Of Fame."                      
+6590 PRINT '"Please Enter Your Name."                           
+6600 INPUT b$                   
+6610 FOR n=1 TO 5               
+6620 IF x>=x(n) THEN GO TO 6640 
+6630 NEXT n: STOP               
+6650 FOR m=n+1 TO 5             
+6660 LET x(m)=x(m-1)            
+6665 LET x$(m)=x$(m-1)          
+6670 NEXT m                     
+6680 LET x$(n)=b$: LET x(n)=x   
+6681 FOR n=1 TO q               
+6682 IF e(n,9)>0 THEN GO TO 6690
+6683 NEXT n                     
+6685 GO TO 7500                 
+6690 GO TO 1800                 
+6700 REM ***DRAGON'S LAIR***    
+6705 PRINT "You are in the Dragon's Lair."                      
+6710 IF tre=0 THEN RETURN       
+6720 PRINT "In a corner of the cavern lies apile of Gold Coins, the Treasure of the Dragon."     
+6730 RETURN                     
+7000 REM ***HALL OF FAME***     
+7010 PRINT "You have entered The Cavern Of Fame."
+7020 PRINT '"In the middle of the room lies a great luminous slab."''"Some signs have been cut into the stone. They read:" 
+7021 DATA 5,4,2,3,1             
+7022 PAUSE 500: PAPER 0: BORDER 0: CLS                          
+7027 RESTORE 7021               
+7028 PRINT INK 6;'"       SURVIVORS"'                           
+7030 FOR n=1 TO 5               
+7032 READ b: INK b              
+7035 PRINT                      
+7040 PRINT x$(n);               
+7050 LET a=x(n): IF a>100 THEN LET a=a-100: PRINT "  Dragon Slayer."                            
+7060 GO SUB 2480: IF a>0 THEN PRINT b$;" Gold Coin";"s" AND a>1 
+7065 PRINT                      
+7070 NEXT n                     
+7075 FOR m=1 TO 100             
+7080 FOR n=0 TO 7               
+7081 IF INKEY$<>"" THEN GO TO 7090                              
+7082 BORDER n                   
+7085 NEXT n                     
+7087 NEXT m                     
+7090 PAPER 7: INK 0: BORDER 7: CLS                              
+7100 RETURN                     
+7500 REM ***END OF GAME***      
+7510 PRINT '"   ADVENTURERS:"   
+7520 FOR n=1 TO q               
+7530 PRINT "Nr.";n;"  ";a$(e(n,11)),                            
+7540 IF e(n,13)=0 THEN PRINT "Escaped",                         
+7550 IF e(n,12)=1 THEN PRINT "Dragon Slayer";                   
+7555 PRINT                      
+7560 LET a=e(n,3): GO SUB 2480: IF a>0 THEN PRINT b$;" Gold Coin";"s" AND a>1                   
+7570 PRINT                      
+7580 NEXT n                     
+7590 PRINT ''"Press A Key To Play Again."                       
+7600 PAUSE 10000                
+7605 CLS                        
+7610 GO TO 10                   
+8000 REM ***CHECK***            
+8010 FOR n=1 TO 50              
+8020 PRINT n;TAB 5;             
+8030 IF a(n,11)=1 THEN PRINT "a pit  ";                         
+8040 IF a(n,12)=1 THEN PRINT "muck";                            
+8050 PRINT                      
+8060 NEXT n                     
+8070 PRINT "Monsters alive"     
+8080 IF dra<>0 THEN PRINT "The Dragon"                          
+8090 FOR n=1 TO q+1             
+8100 IF d(n)<>0 THEN PRINT "A Giant Serpent"                    
+8110 NEXT n                     
+8120 FOR n=1 TO q+2             
+8130 IF b(n)<>0 THEN PRINT "A Goblin"                           
+8140 NEXT n                     
+8150 FOR n=1 TO q+3             
+8160 IF c(n)<>0 THEN PRINT "An Orc"                             
+8170 NEXT n                     
+8200 STOP                       
+8500 REM ***FIGHT***            
+8501 LET mag=0: LET e(o,2)=e(o,2)-1                             
+8502 IF e(o,14)+e(o,5)=0 THEN LET mag=1: GO TO 8560             
+8505 IF e(o,7)=0 THEN GO TO 8565
+8510 PRINT "Do You Wish To Use Your Staff ?"                    
+8520 INPUT b$                   
+8530 LET b$=b$+" "              
+8540 LET mag=0                  
+8550 IF b$(1)="y" THEN LET mag=1
+8560 IF mag=1 AND INT (RND*6)>e(o,10) THEN PRINT "Your magical powers failed to produce a lightning bolt.": GO TO 1750        
+8565 LET a=e(o,1)               
+8570 GO SUB 3200                
+8580 IF mag=1 AND INT (RND*10)=0 THEN PRINT "The magic staff splintered into glowing fragments.": LET e(o,7)=e(o,7)-1           
+8590 FOR n=1 TO 100: NEXT n     
+8600 GO TO 1750                 

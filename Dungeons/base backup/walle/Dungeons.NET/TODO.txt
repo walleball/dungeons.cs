@@ -1,0 +1,255 @@
+-visa vad man vill ha vid ny level
+-alla vill visst ha ringar
+-nåt problem med ringgenerer?
+
+-Återskapa items lite oftare
+-Visa oöppnad utgång i unvisited
+Ring of Sensitive Scent (ersätt Serpent Shield med vanlig Shield)
+
+
+>visa ring i blandat
+>kolla ringars kapabel ANTAL
+>visa blockerade rum i unvisited
+
+>mönster skjuter oftare
+>alla vill ha ring
+>ingen utgång i blandat
+>drick mera om törstig
+>autodrick om man är instängd
+>pilar 
+>monster gör ljud om de hör ljud
+mera monster
+ringar (försvinner bara när man dör):
+    -girighet (kan inte flytta från rum med guld eller oöppnad kista)
+    -nyfiken (kan inte flytta förrän dörr eller kista öppnats)
+    -blodtörstig (kan inte flytta om monster i samma rum)
+    -heroism (kan inte flytta om monster i annat rum)
+    -healing (helar ett poäng var 10:e runda om man vilar)
+    -säkert sikte (default skjuter aldrig mot tomt rum)
+    -styrka (ökar strength)
+    -protection (ökar armor-capability)
+    -skill (ökar antal attacker och pilskott)
+    -magic (ökar antal balls och bolts)
+
+-no ring
+-hero kan flytta om man inte kan skjuta
+-ta upp flera ringar
+
+>spara inte loggen om allt gått bra
+>behåll sandaler
+>max 50 guld
+>vänta bakom galler
+>vaktmästaren hjälper öppna dörrar
+--- trollkarl laddar efter också
+>visa bara magi man behöver
+snabbare orcs-generering
+>osynlig utgång
+>	även i misc
+>köp stavar
+>trollkarl tar bort spill
+>ingen bolt utan utgång
+
+>Magiska saker finns bara första gången, eller så genereras de om mycket mera sällan...
+>Skapa "Notes" automatiskt och visa bara "skatterna" när de åter-genererats!
+>Fixa till auto-bolt efter fireball
+>Varför inte ha auto-shoot efter fight för t.ex. alver (och kanske andra på högre nivåer)?
+>På tok för mycket pengar! Använd fLairCount istället!
+>Det räcker med att poola 250 guld...
+
+>hantera okänt kommando i kartmenyn
+>spara inte alla dungeons
+
+>inte alltid trollkarl i ruta 1
+>sluta törstvarna när man väntar
+>variabla stavar
+dela vatten
+
+begränsat antal nycklar
+hermit plockar upp nycklar
+max 6 attacker av monster
+Ta bort "dragon-sword" effekten? När går de sönder dårå?
+Eller är "dragon-sword" effekten att man aldrig blir överraskad?
+
+>minska sköldräknaren
+>nollställ rustningräknaren
+
+>Chans till auto-attack (inte alltid överraska rand(0, #attacks) < monster no to attack)
+>trollkarl börjar i 1
+>högre sköldräkning
+>färre rustningar
+>svärdräknare?
+>rustningräknare?
+>Mindre pengar hos balrog
+>visa bara rustning man kan och vill ha
+
+>Chans till dodge eller parering av attack?
+
+>trollkarl laddar stavar
+>rustning
+>nyckar kan inte få dörrar att fastna
+>höj gränsen för monsterpoints
+>stavar som "magic items"
+>längre lukt
+>när man dör inte så skadad och erfarenhet
+
+>Varje monster har ett målrum som de vill gå till. Detta målrum sätts när de hör något (eller luktar?).
+>När ett monster i ett rum blir skadat så sätts detta målrum till olika rum för varje monster i rummet.
+
+skeletons
+monster som skjuter pilar och lightnings
+>skada vid pit och muck
+
+>lättare att dyrka när man väntar
+>goblin som flyttade sig var inte överraskad
+
+>pool gold när trollkarlen kommer
+>trollkarl ignorerar väntande utan pengar
+>fireball mycket starkare
+>bättre text när stav brister
+>visa besökt exit även om den är låst
+
+>mera max stavar
+>spara explored rooms och visa det i listan när man gör "move"
+>ingen hermit
+>visa inte hermit i misc
+
+>trollkarl besöker väntande när alla rum är besökta
+>no shooting at exits
+>visa exit även vid ett fåtal obesökta
+>stav går sönder först
+
+>poolbonus baserat på ras
+>pool guld och pilar viktat på stavar
+>visa skada tid i början
+>förlora inte alla saker när man dör
+>cast bolt 3/2
+
+>inte vänta när nät brister
+>visa potent om besökt
+>visa pilar i blandat
+>cast bolt 1/2
+>stora sår när man dör
+>ta bort eremiten
+>kom ihåg utforskade rum, hemvister och vilket monster som bor där
+>ta bort map->doors
+
+>wounds heal 1 xp / severity of wound
+sårade monster får unika "hunt" rooms.
+scent ska ligga kvar lite längre
+
+>dö inte, tappa xp (hälften?)
+
+>färre pilar
+>visa inte onödiga nycklar
+>skilj mellan skjuta och flytta i titeln
+>visa monster i dungeon namnet
+>default move efter paralyserad
+>visa pilar
+
+>sårat monster är inte överraskad
+>bolt krasch med två galler
+
+Much cleanup kit
+Use staffs as magic items
+armor
+
+det blir fel när hemvist ligger bakom en dörr 
+rum utan magi 
+fler monster - vargar?
+helande dryck
+max 8 spelare straff .90 om man avslutar 
+vargar
+stopp om man dör på sista banan
+Visa bara en äventyrare i taget i "Adventurers"
+en spelare per fem nivåer, max antal spelare
+straff för fusk
+spindelgift i dörrar och kistor
+>öka antal bolts, magi varannan gång
+>debug funkar inte
+
+>Bara pilar genom galler
+>visa hemvist istället för monster
+>9/10 staffs
+>visa nummer i karta blandad
+>pilar gör mer skada om strenght är större än 0
+>max antal nycklar
+>dungeon score when emptied
+>max x keys
+>more levels
+>keys cost at least level in coins
+treasure score is less for completed dungeons
+>show coins
+>Default "Talk to Wizard" if money and needs staff
+>Same display 0/3 swords in Map->Adventurers
+
+Open:
+>Make spider weaker and serpents stronger
+>No using dragon swords when paralyzed
+>Spiders avoid players, unless stuck in webs
+
+Axes can break
+Less info in misc
+Move Hermit to same room before miscing
+Armor
+GetMaxWater - depends on strength 20 + 10 * strength ?
+
+do not add monsters if no passages
+>smaller monster array
+>arrows do more damage
+>remember last shot
+>staff-array
+
+
+>klarger monsteraarray
+>limit sword attacks
+>remember uncreated monsters in lairs
+
+
+>Distribute (3) shields, (2) sandals and (3) swords evenly
+>Wait at most 1 day for dungeon cleanup
+>Keep carpet and slippers and keys and axes
+>Magic does 5 damage initially
+>Balrog shouldn't hear slippers
+>Max number of swords (attacks) and shield (strength)
+>Random sandals, carpet and axe
+>Levels are too fast
+>Orcs are too easy to kill with magic
+>Use MonsterCounter when displaying magic results
+>Less keys
+
+
+Armor Shields Sword
+Spiders do attack nearby players, nah.
+Exit-graphics
+Updated seed when no players?
+Objects!!!
+Remove the trace buffer. When has it ever helped?
+Keep the sandals
+Real objects that are distributed based on score
+
+CR: Type of maze; treasure-room where monsters hoard a treasure, guardian where monsters guard the exit
+CR: "guardian" exit layouts; single room, multiple rooms with monsters in side-chambers converging on the central room
+CR: More monsters, both types and numbers
+CR: variable hitpoint for monsters
+CR: less shields (and swords). Naw.
+CR: The shop
+CR: Spiders and webs
+
+>>history in room display
+curses: greed bloodthirst
+fatigue: move x spaces and wait (same as monsters)
+
+
+Postponed:
+
+Cancelled:
+
+Implemented:
+Monsters moves to adjacent room with players, even when fighting
+Spiders are never surprised
+Remove ASSERTs: door.open jammed, monster.move null
+CR: Portcullis drops down after a player and blocks further passage
+Wound gives a point (except magic damage)
+Display only 10 dungeons at a time
+
+
